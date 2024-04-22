@@ -1,60 +1,71 @@
 def display_menu():
-    print("=== COUNTRY DICTIONARY ===")
-    print("1. View a country")
-    print("2. Add a country")
-    print("3. Delete a country")
-    print("4. Exit")
+    print("Command Menu")
+    print("view   ---> View country name")
+    print("add    ---> Add a country")
+    print("delete ---> Delete a country")
+    print("exit   ---> Exit the program")
+    print()
 
-def populate_dictionary():
-    countries = {"1": "United States", "2": "United Kingdom", "3": "France"}
+
+def prepopulate_countries():
+    countries = {
+        "USA": "United States",
+        "CAN": "Canada",
+        "AUS": "Australia"
+    }
     return countries
 
-def view_country(dictionary):
-    print("Available countries:")
-    for key in dictionary:
-        print(key, "-", dictionary[key])
-    user_input = input("Enter the key of the country you want to view: ")
-    if user_input in dictionary:
-        print("Country:", dictionary[user_input])
+def display_codes(countries):
+    codes = list(countries.keys())
+    codes.sort()
+    codes_line = "country codes:  "
+    for code in codes:
+        codes_line += code + "  "
+    print(codes_line)
+        
+def view(countries):
+    display_codes(countries)
+    code = input("Enter the code of the country you want to view: ").upper()
+    if code in countries:
+        name = countries.pop(code)
+        print(f"Country name: {name}. \n")
     else:
-        print("Invalid key!")
+        print("There is no coutry with that code. \n")
+        
+def add(countries):
+    code = input("Enter the code of the new country: ").upper()
+    if code in countries:
+        print(f"Country with code, {code}, already exists. \n")
+    else:
+        name = input("Enter the name of the new country: ").upper()
+        countries[code] = name
+        print(f"Country, {name}, added successfully. \n")
 
-def add_country(dictionary):
-    key = input("Enter the key for the new country: ")
-    if key in dictionary:
-        print("Country with this key already exists!")
+def delete(countries):
+    code = input("Enter the code of the country you want to delete: ").upper()
+    if code in countries:
+        name = countries.pop(code)
+        print(f"Country, {name} deleted successfully. \n")
     else:
-        country = input("Enter the name of the new country: ")
-        dictionary[key] = country
-        print("Country added successfully!")
-
-def delete_country(dictionary):
-    print("Available countries:")
-    for key in dictionary:
-        print(key, "-", dictionary[key])
-    key = input("Enter the key of the country you want to delete: ")
-    if key in dictionary:
-        del dictionary[key]
-        print("Country deleted successfully!")
-    else:
-        print("Invalid key!")
+        print("Invalid key. \n")
 
 def main():
-    countries_dict = populate_dictionary()
+    countries = prepopulate_countries()
+    display_menu()
     while True:
-        display_menu()
-        choice = input("Enter your choice: ")
-        if choice == "1":
-            view_country(countries_dict)
-        elif choice == "2":
-            add_country(countries_dict)
-        elif choice == "3":
-            delete_country(countries_dict)
-        elif choice == "4":
-            print("Exiting program...")
+        Command = input("Command: ").lower()
+        if Command == "view":
+            view(countries)
+        elif Command == "add":
+            add(countries)
+        elif Command == "delete":
+            delete(countries)
+        elif Command == "exit":
+            print("Bye.")
             break
         else:
-            print("Invalid command!")
+            print("Invalid command. Please try again. \n")
+
 
 if __name__ == "__main__":
     main()
