@@ -27,7 +27,7 @@ def view(countries):
     display_codes(countries)
     code = input("Enter the code of the country you want to view: ").upper()
     if code in countries:
-        name = countries.pop(code)
+        name = countries[code]
         print(f"Country name: {name}. \n")
     else:
         print("There is no coutry with that code. \n")
@@ -37,7 +37,7 @@ def add(countries):
     if code in countries:
         print(f"Country with code, {code}, already exists. \n")
     else:
-        name = input("Enter the name of the new country: ").upper()
+        name = input("Enter the name of the new country: ").title()
         countries[code] = name
         print(f"Country, {name}, added successfully. \n")
 
